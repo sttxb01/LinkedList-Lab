@@ -1,6 +1,7 @@
 public class SortedLinkedList
 {
   private Node head;
+  private int theLength = 0;
   
   /**
    * Create an empty list.
@@ -34,7 +35,18 @@ public class SortedLinkedList
    */
   public String getName(int index)
   {
-    
+    if(head == null)
+    {
+      return null;
+    }
+    int i = 0;
+    Node node = head;
+    while(i < index)
+    {
+      node = node.getNext();
+      i += 1;
+    }
+    return node.getName();
   }
   
   /**
@@ -44,7 +56,18 @@ public class SortedLinkedList
    */
   public int getQuantity(int index)
   {
-    
+    if(head == null)
+    {
+      return -1;
+    }
+    int i = 0;
+    Node node = head;
+    while(i < index)
+    {
+      node = node.getNext();
+      i += 1;
+    }
+    return node.getQuantity();
   }
   
   /**
@@ -52,7 +75,7 @@ public class SortedLinkedList
    */
   public int length()
   {
-    
+    return theLength;
   }
   
   /**
@@ -61,7 +84,7 @@ public class SortedLinkedList
    */
   public boolean isMember(String name)
   {
-    
+    return false;
   }
   
   /**
@@ -70,6 +93,61 @@ public class SortedLinkedList
    */
   public void insert(String name, int quantity)
   {
-    
-  }  
+    Node prev = null;
+    Node curr = head;
+    Node nn = new Node(name, quantity);
+    if(curr == null)
+    {
+      nn.setNext(head);
+      head = nn;
+      theLength ++;
+    }
+    else
+    {
+      while(curr != null)
+      {
+        if(nn.getQuantity() >= curr.getQuantity())
+        {
+          if(prev == null)
+          {
+            nn.setNext(head);
+            head = nn;
+            theLength ++;
+            break;
+          }
+          else
+          {
+            prev.setNext(nn);
+            nn.setNext(curr);
+            theLength ++;
+            break;
+          }
+        }
+        if(nn.getQuantity() == curr.getQuantity())
+        {
+          if(prev == null)
+          {
+            nn.setNext(head);
+            head = nn;
+            theLength ++;
+            break;
+          }
+          else
+          {
+            prev.setNext(nn);
+            nn.setNext(curr);
+            theLength ++;
+            break;
+          }
+        }
+        prev = curr;
+        curr = curr.getNext();
+      }
+      if(curr == null)
+      {
+        prev.setNext(nn);
+        theLength ++;
+      }
+    }
+  }
 }
